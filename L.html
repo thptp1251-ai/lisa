@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLACKPINK WORLD TOUR [BORN PINK] STADIUM TICKETS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;600;700&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #030305;
+            --card-color: #09090e;
+            
+            /* สีโซนตามผังคอนเสิร์ตจริง */
+            --color-vip: #ff007f;     /* แถว A-B: ชมพู VIP */
+            --color-premium: #a855f7; /* แถว C-E: ม่วง */
+            --color-standard: #3b82f6;/* แถว F-H: น้ำเงิน */
+            --color-upper: #10b981;   /* แถว J-K: เขียว */
+            
+            --selected-gold: #ffcc00;  /* สีทองสำหรับที่นั่งที่กำลังเลือก */
+            --sold-out: #16161f;       /* สีที่นั่งที่ขายแล้ว */
+            --text-main: #ffffff;
+            --text-muted: #8e8e9f;
+        }
+
+        body { 
+            font-family: 'Anuphan', 'Montserrat', sans-serif; 
+            text-align: center; 
+            background: radial-gradient(circle at top, #1c0111 0%, var(--bg-color) 80%); 
+            color: var(--text-main); 
+            margin: 0; 
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container { 
+            width: 100%;
+            max-width: 1250px; 
+            background: rgba(9, 9, 14, 0.9); 
+            backdrop-filter: blur(15px);
+            padding: 30px 20px; 
+            border-radius: 30px; 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.9), 0 0 50px rgba(255, 0, 127, 0.08); 
+            border: 1px solid rgba(255, 0, 127, 0.12);
+            overflow-x: auto;
+        }
+
+        /* โลโก้ BLACKPINK ตรงกลาง */
+        .logo-container {
+            margin: 0 auto 30px auto;
+            max-width: 420px;
+            width: 85%;
+        }
+
+        .logo-img {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 0 10px rgba(255, 0, 127, 0.4));
+        }
+
+        /* ----- โซนภาพเวทีคอนเสิร์ตจริง ----- */
+        .stage-container {
+            margin: 0 auto 35px auto;
+            max-width: 900px;
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8), 0 0 25px rgba(255, 0, 127, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            line-height: 0;
+        }
+
+        .stage-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* ----- ผังสนามกีฬาโค้งสไตล์รังผึ้ง (Stadium Arc Layout) ----- */
+        .stadium-layout { 
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 40px auto;
+            max-width: 1100px;
+            padding: 10px;
+        }
+
+        /* จัดแถวให้โค้งโอบล้อมเวทีคอนเสิร์ต */
+        .seat-row {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            width: 100%;
+        }
+
+        .seat { 
+            width: 44px;
+            height: 40px; 
+            background: rgba(255, 255, 255, 0.03);
+            cursor: pointer; 
+            border-radius: 6px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px; 
+            font-weight: 700;
+            color: #ffffff;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            user-select: none;
+            border: 1.5px solid transparent;
+        }
+
+        /* กำหนดสีขอบและเอฟเฟกต์ตามตัวอักษรแถวเพื่อแยกโซนราคา */
+        .seat.zone-vip { border-color: var(--color-vip); background: rgba(255, 0, 127, 0.05); color: var(--color-vip); }
+        .seat.zone-premium { border-color: var(--color-premium); background: rgba(168, 85, 247, 0.05); color: var(--color-premium); }
+        .seat.zone-standard { border-color: var(--color-standard); background: rgba(59, 130, 246, 0.05); color: var(--color-standard); }
+        .seat.zone-upper { border-color: var(--color-upper); background: rgba(16, 185, 129, 0.05); color: var(--color-upper); }
+
+        /* เอฟเฟกต์ไฟเรืองแสงตอนโฮเวอร์แยกตามสีโซน */
+        .seat.zone-vip:hover:not(.sold) { background: var(--color-vip); color: #000; box-shadow: 0 0 15px var(--color-vip), inset 0 0 5px #fff; transform: translateY(-3px) scale(1.05); }
+        .seat.zone-premium:hover:not(.sold) { background: var(--color-premium); color: #000; box-shadow: 0 0 15px var(--color-premium), inset 0 0 5px #fff; transform: translateY(-3px) scale(1.05); }
+        .seat.zone-standard:hover:not(.sold) { background: var(--color-standard); color: #000; box-shadow: 0 0 15px var(--color-standard), inset 0 0 5px #fff; transform: translateY(-3px) scale(1.05); }
+        .seat.zone-upper:hover:not(.sold) { background: var(--color-upper); color: #000; box-shadow: 0 0 15px var(--color-upper), inset 0 0 5px #fff; transform: translateY(-3px) scale(1.05); }
+
+        /* เมื่อคลิกเลือก เปลี่ยนเป็นสีทอง VIP เรืองแสงเด่นชัด */
+        .seat.selected { 
+            background: var(--selected-gold) !important; 
+            border-color: var(--selected-gold) !important;
+            color: #000 !important; 
+            font-weight: 900; 
+            box-shadow: 0 0 20px var(--selected-gold), inset 0 0 5px #fff;
+            transform: scale(1.1) translateY(-3px);
+            z-index: 5;
+        }
+
+        /* บัตรที่ขายแล้ว ดับไฟมืดสนิทสไตล์ SOLD OUT */
+        .seat.sold { 
+            background: var(--sold-out) !important; 
+            border-color: #242433 !important;
+            color: #434355 !important;
+            cursor: not-allowed; 
+            opacity: 0.35; 
+            box-shadow: none;
+            transform: none !important;
+        }
+
+        /* ----- ตารางราคาสัญญลักษณ์ด้านล่างแบบเว็บ Thaiticket ----- */
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin: 30px auto;
+            max-width: 1000px;
+            background: rgba(255,255,255,0.02);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .legend-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #0f0f16;
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.03);
+            text-align: left;
+        }
+
+        .legend-color-box {
+            width: 20px;
+            height: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.5);
+        }
+
+        .legend-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .legend-title { font-size: 12px; font-weight: 700; color: #fff; }
+        .legend-price { font-size: 14px; font-weight: 700; font-family: 'Montserrat', sans-serif; }
+
+        /* ปุ่มจองหรูหราไล่เฉดสี */
+        .btn-book { 
+            max-width: 450px;
+            width: 100%;
+            padding: 18px; 
+            font-size: 16px; 
+            font-family: 'Anuphan', sans-serif;
+            background: linear-gradient(90deg, #ff007f 0%, #ff55a5 50%, #b50057 100%); 
+            color: white; 
+            border: none; 
+            border-radius: 20px; 
+            cursor: pointer; 
+            font-weight: 700; 
+            letter-spacing: 1px;
+            transition: all 0.3s ease; 
+            box-shadow: 0 12px 35px rgba(255, 0, 127, 0.4);
+            margin: 10px auto 0 auto;
+            text-transform: uppercase;
+        }
+
+        .btn-book:hover { 
+            transform: translateY(-3px);
+            box-shadow: 0 15px 45px rgba(255, 0, 127, 0.65);
+            filter: brightness(1.15);
+        }
+
+        .loading-text {
+            color: var(--color-vip);
+            font-size: 16px;
+            font-weight: 600;
+            padding: 60px 0;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px var(--bp-pink-glow);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="logo-container">
+            <img src="Blackpink_logo.svg.png" alt="BLACKPINK LOGO" class="logo-img">
+        </div>
+        
+        <div class="stage-container">
+          
+        </div>
+
+        <div class="stadium-layout" id="stadium-seating">
+            <div class="loading-text">BORN PINK STADIUM SYSTEM IS CONNECTING...</div>
+        </div>
+
+        <div class="legend-grid">
+            <div class="legend-card">
+                <div class="legend-color-box" style="background: var(--color-vip); box-shadow: 0 0 10px var(--color-vip);"></div>
+                <div class="legend-info">
+                    <span class="legend-title">BLINK VIP PIT (แถว A-B)</span>
+                    <span class="legend-price" style="color: var(--color-vip);">9,800 THB</span>
+                </div>
+            </div>
+            <div class="legend-card">
+                <div class="legend-color-box" style="background: var(--color-premium); box-shadow: 0 0 10px var(--color-premium);"></div>
+                <div class="legend-info">
+                    <span class="legend-title">PREMIUM SEATS (แถว C-E)</span>
+                    <span class="legend-price" style="color: var(--color-premium);">6,800 THB</span>
+                </div>
+            </div>
+            <div class="legend-card">
+                <div class="legend-color-box" style="background: var(--color-standard); box-shadow: 0 0 10px var(--color-standard);"></div>
+                <div class="legend-info">
+                    <span class="legend-title">STANDARD ZONE (แถว F-H)</span>
+                    <span class="legend-price" style="color: var(--color-standard);">4,800 THB</span>
+                </div>
+            </div>
+            <div class="legend-card">
+                <div class="legend-color-box" style="background: var(--color-upper); box-shadow: 0 0 10px var(--color-upper);"></div>
+                <div class="legend-info">
+                    <span class="legend-title">UPPER DECK (แถว J-K)</span>
+                    <span class="legend-price" style="color: var(--color-upper);">2,800 THB</span>
+                </div>
+            </div>
+            <div class="legend-card" style="grid-column: span 1; justify-content: center; background: #07070a;">
+                <div class="legend-color-box" style="background: var(--sold-out); border: 1px solid #242433;"></div>
+                <div class="legend-info">
+                    <span class="legend-title" style="color: #434355;">SOLD OUT (ขายหมดแล้ว)</span>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn-book" onclick="bookTicket()">💖 CONFIRM & GET TICKETS (ยืนยันการจองตั๋ว) 🛒</button>
+    </div>
+
+    <script>
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyKwjbWzUNtrRVS3BNJORJD4z9WBvpVdoKfqssvywrM15EWMXYWJh9r-jo2V4zKrxc3/exec";
+        let selectedSeatId = null;
+
+        function fetchSeats() {
+            const oldScript = document.getElementById('jsonp-script');
+            if (oldScript) oldScript.remove();
+
+            const script = document.createElement('script');
+            script.id = 'jsonp-script';
+            script.src = WEB_APP_URL + "?callback=renderStadium&t=" + new Date().getTime();
+            document.body.appendChild(script);
+        }
+
+        // ฟังก์ชันจัดกลุ่มข้อมูลแยกเป็นแถว A-K และวาดแผนผังสนามกีฬาแบบโค้ง
+        function renderStadium(seats) {
+            const stadium = document.getElementById('stadium-seating');
+            stadium.innerHTML = ''; 
+
+            if (!seats || seats.length === 0) {
+                stadium.innerHTML = '<div class="loading-text">ERROR: CANNOT RETRIEVE DATA FROM GOOGLE SHEETS</div>';
+                return;
+            }
+
+            // จัดกลุ่มที่นั่งแยกตามตัวอักษรแถว (Row Letter เช่น A, B, C...)
+            const rowsData = {};
+            seats.forEach(seat => {
+                const rowLetter = seat.seat_number.charAt(0); // ดึงตัวอักษรตัวแรก เช่น 'A' จาก 'A1'
+                if (!rowsData[rowLetter]) {
+                    rowsData[rowLetter] = [];
+                }
+                rowsData[rowLetter].push(seat);
+            });
+
+            // วาดที่นั่งทีละแถว เพื่อควบคุมความโค้งสไตล์สเตเดียมใหญ่
+            Object.keys(rowsData).sort().forEach(rowLetter => {
+                const rowEl = document.createElement('div');
+                rowEl.className = 'seat-row';
+                
+                // คำนวณความโค้ง: แถวที่อยู่ด้านหลัง (F, G, H, J, K) จะมีช่องว่างระยะห่างขยายออกเป็นทรงถ้วยล้อมเวที
+                const seatsCount = rowsData[rowLetter].length;
+                
+                rowsData[rowLetter].forEach(seat => {
+                    const seatEl = document.createElement('div');
+                    const isSold = seat.status === 'sold' || (seat.status !== 'available' && seat.status !== 'ว่าง');
+                    
+                    // คัดแยกคลาสสีของโซนตามตัวอักษรแถว
+                    let zoneClass = 'zone-upper';
+                    if (['A', 'B'].includes(rowLetter)) zoneClass = 'zone-vip';
+                    else if (['C', 'D', 'E'].includes(rowLetter)) zoneClass = 'zone-premium';
+                    else if (['F', 'G', 'H'].includes(rowLetter)) zoneClass = 'zone-standard';
+
+                    seatEl.className = `seat ${zoneClass} ${isSold ? 'sold' : ''}`;
+                    seatEl.innerHTML = `<span>${seat.seat_number}</span>`;
+
+                    if (!isSold) {
+                        seatEl.onclick = () => selectSeat(seat.id, seatEl);
+                    }
+
+                    rowEl.appendChild(seatEl);
+                });
+
+                stadium.appendChild(rowEl);
+            });
+        }
+
+        function selectSeat(id, element) {
+            document.querySelectorAll('.seat').forEach(el => el.classList.remove('selected'));
+            selectedSeatId = id;
+            element.classList.add('selected');
+        }
+
+        async function bookTicket() {
+            if (!selectedSeatId) {
+                alert('💥 BORN PINK AREA: กรุณาคลิกเลือกที่นั่งบนผังสนามกีฬาที่ต้องการก่อนครับ!');
+                return;
+            }
+
+            document.getElementById('stadium-seating').innerHTML = '<div class="loading-text">PROCESSING STADIUM BOOKING SYSTEM... PLEASE WAIT.</div>';
+
+            try {
+                await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({ 'id': selectedSeatId, 'status': 'sold' })
+                });
+
+                alert('🎉 BLACKPINK IN YOUR AREA! การกดจองตั๋วสเตเดียมของคุณสำเร็จเรียบร้อยแล้ว! เตรียมแท่งไฟให้พร้อมแล้วไปสนุกกันเลย! 🖤💖');
+                selectedSeatId = null;
+                setTimeout(fetchSeats, 1500); 
+
+            } catch (error) {
+                alert('เกิดข้อผิดพลาดในการจอง: ' + error.message);
+                fetchSeats();
+            }
+        }
+
+        // เริ่มระบบดึงข้อมูล
+        fetchSeats();
+    </script>
+</body>
+</html>
